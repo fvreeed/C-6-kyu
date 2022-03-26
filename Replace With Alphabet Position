@@ -1,0 +1,47 @@
+/*
+Welcome.
+
+In this kata you are required to, given a string, replace every letter with its position in the alphabet.
+
+If anything in the text isn't a letter, ignore it and don't return it.
+
+"a" = 1, "b" = 2, etc.
+*/
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+// returned string has to be dynamically allocated and will be freed by the caller
+char *alphabet_position(const char *text) {
+  int l = strlen(text);
+  char c;
+  char al[4];
+  int ch;
+  char* result = malloc(1000 * sizeof(char));
+  for (int i = 0; i < l; i++) {
+    c = text[i];
+    if ((int)c <= 90 && (int)c >= 65) {
+      c += ' ';
+      c -= '`';
+      ch = (int)c;
+      sprintf(al, "%d", ch);
+      strcat(result, al);
+    } else if ((int)c <= 122 && (int)c >= 97 && i != 0) {
+      c -= '`';
+      ch = (int)c;
+      if (i == l - 1) {
+        sprintf(al, " %d", ch);
+        strcat(result, al);
+      } else {
+        sprintf(al, " %d", ch);
+        strcat(result, al); 
+      }
+    } else if ((int)c <= 122 && (int)c >= 97 && i == 0) {
+      c -= '`';
+      ch = (int)c;
+      sprintf(al, "%d", ch);
+      strcat(result, al);
+    }
+  }
+  return result;
+}
