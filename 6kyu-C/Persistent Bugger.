@@ -1,0 +1,18 @@
+/*
+Write a function, persistence, that takes in a positive parameter num and returns its multiplicative persistence, 
+which is the number of times you must multiply the digits in num until you reach a single digit.
+*/
+int persistence(int n) {
+  int mult = 1, m = 1, q = 0;
+  while ((n / 10) != 0) {
+    while (n != 0) {
+      m = n % 10;
+      n = n / 10;
+      mult = mult * m;
+    }
+    n = mult;
+    mult = 1;
+    q++;
+  }
+  return q;
+}
