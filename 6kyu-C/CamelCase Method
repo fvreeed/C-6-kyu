@@ -1,0 +1,14 @@
+/*
+Write simple .camelCase method (camel_case function in PHP, CamelCase in C# or camelCase in Java) for strings.
+All words must have their first letter capitalized without spaces.
+*/
+#include <stdlib.h>
+#include <ctype.h>
+
+char *camel_case(const char *s)
+{
+  char *result = strdup(s), *p = result, *q = p, up = 1;
+  for (; *p; p++) if (*p != ' ') *q++ = up ? up = 0, toupper(*p) : *p; else up = 1;
+  *q = 0;
+  return result;
+}
