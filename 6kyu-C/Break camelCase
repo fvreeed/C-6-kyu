@@ -1,0 +1,27 @@
+/*
+Complete the solution so that the function will break up camel casing, using a space between words.
+*/
+#include <stddef.h> // NULL
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+//returned buffer should be dynamically allocated and will be freed by a caller
+char* solution(const char *camelCase) {
+  int l, j = 0, q = 0;
+  char c = '\0';
+  l = strlen(camelCase) * 3;
+  char *text = malloc(l * sizeof(char));
+  for (int i = 0; i < l / 2; i++) {
+    c = camelCase[i];
+    if (65 <= c && c <= 90) {
+      text[j] = ' ';
+      j++;
+      q++;
+      text[j] = c;
+    } else {
+      text[j] = c;
+    }
+    j++;
+  }
+  return text;
+}
