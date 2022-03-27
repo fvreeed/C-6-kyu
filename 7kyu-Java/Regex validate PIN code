@@ -1,0 +1,28 @@
+/*
+ATM machines allow 4 or 6 digit PIN codes and PIN codes cannot contain anything but exactly 4 digits or exactly 6 digits.
+
+If the function is passed a valid PIN string, return true, else return false.
+
+Examples (Input --> Output)
+"1234"   -->  true
+"12345"  -->  false
+"a234"   -->  false
+*/
+public class Solution {
+  public static boolean validatePin(String pin) {
+    int result;
+    boolean res = false;
+    if (pin.length() == 4 || pin.length() == 6) {
+      pin = pin.replaceAll("[0-9]", "");
+      result = pin.length();
+      if (result == 0) {
+        res = true;
+      } else {
+        res = false;
+      }
+    } else {
+      res = false;
+    }
+    return res;
+  }
+}
