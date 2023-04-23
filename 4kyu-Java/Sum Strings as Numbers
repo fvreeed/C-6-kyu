@@ -1,0 +1,82 @@
+/*
+Given the string representations of two integers, return the string representation of the sum of those integers.
+
+For example:
+
+sumStrings('1','2') // => '3'
+A string representation of an integer will contain no characters besides the ten numerals "0" to "9".
+
+I have removed the use of BigInteger and BigDecimal in java
+
+Python: your solution need to work with huge numbers (about a milion digits), converting to int will not work.
+*/
+public class Kata {
+  public static String sumStrings(String a, String b) {
+    if (a.length() == b.length())
+      return toString(equal(a, b));
+    else
+      return toString(nonEqual(a, b));
+  }
+  
+  public static int[] nonEqual(String a, String b) {
+    int maxSize = a.length() >= b.length() ? a.length() : b.length();
+    int minSize = a.length() < b.length() ? a.length() : b.length();
+    char[] maxChar = a.length() >= b.length() ? a.toCharArray() : b.toCharArray();
+    char[] minChar = a.length() < b.length() ? a.toCharArray() : b.toCharArray();
+    int[] preResult = new int[maxSize + 1];
+    String result = "";
+    int dec = 0, sum = 0, l = preResult.length - 1, diferente = maxSize - minSize - 1;
+    preResult = equal(a, b);
+    for (int i = diferente; i >= 0; i--) {
+      sum = sum + maxChar[i] - '0' + preResult[i + 1]; 
+      if (sum > 9) {
+        dec = 1;
+        sum -= 10;
+      }
+      preResult[i + 1] = sum;
+      sum = dec;
+      dec = 0;
+    }
+    if (sum == 1)
+      preResult[0] = 1;
+    return preResult;
+  }
+  
+  public static int[] equal(String a, String b) {
+    int maxSize = a.length() >= b.length() ? a.length() : b.length();
+    int minSize = a.length() < b.length() ? a.length() : b.length();
+    char[] maxChar = a.length() >= b.length() ? a.toCharArray() : b.toCharArray();
+    char[] minChar = a.length() < b.length() ? a.toCharArray() : b.toCharArray();
+    int[] preResult = new int[maxSize + 1];
+    String result = "";
+    int dec = 0, sum = 0, l = preResult.length - 1;
+    for (int i = maxSize - 1; i >= 0; i--) {
+      for (int j = minSize - 1; j >= 0; j--) {
+        sum = sum + minChar[j] - '0' + maxChar[i--] - '0';
+        if (sum > 9) {
+          dec = 1;
+          sum -= 10;
+        }
+        preResult[l--] += sum;
+        sum = dec;
+        dec = 0;
+      }
+      i = 0;
+      if (sum == 1)
+        preResult[l] = 1;
+    }
+    return preResult;
+  }
+  
+  public static String toString(int[] a) {
+    String result = "";
+    int check = 0;
+    for (int i = 0; i < a.length; i++) {
+      if (a[i] > 0)
+        check = 1;
+      if (check == 1)
+        result += (char)(a[i] + '0' );
+    }
+    return result;
+  }
+}
